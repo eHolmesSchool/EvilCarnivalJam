@@ -26,7 +26,7 @@ public class LittleMan : MonoBehaviour
     /// MovePosition - The thing it is moving towards
     /// FearPosition - A murder scene we are running away from. Find that direction and move opposite
     /// 
-    /// Images: Stand, WalkL, WalkR, DeadGen, DeadTiger, DeadAxe, DeadWhip, DeadGen2, DeadTiger2, DeadAxe2, DeadWhip2
+    /// Images: Stand, DeadGen, DeadTiger, DeadAxe, DeadWhip, DeadGen2, DeadTiger2, DeadAxe2, DeadWhip2
     /// </summary>
 
     Vector3 pos;
@@ -34,7 +34,7 @@ public class LittleMan : MonoBehaviour
     Vector3 movePos = Vector3.zero;
     Vector3 moveDir = Vector3.zero;
     [SerializeField]state currentState = state.Wander;  //Start as Stand in finished game
-    float moveSpeed = 0.8f;
+    float moveSpeed = 2f;
 
     [SerializeField] List<Sprite> imageList = new List<Sprite>();
     Billboard billboard;
@@ -66,16 +66,15 @@ public class LittleMan : MonoBehaviour
     int standDelayFrames;
 
     int minWanderX = 100;
-    int minWanderY = 100;
-    int maxWanderX = 900;
-    int maxWanderY = 600;
+    int minWanderY = 50;
+    int maxWanderX = 800;
+    int maxWanderY = 400;
 
     
 
     void Start()
     {
-        
-        standDelayFrames = 3*frameDelayStandard;
+        standDelayFrames = frameDelayStandard;
         pos = transform.position;
         billboard = GetComponentInChildren<Billboard>();
         image = GetComponentInChildren<Image>();
@@ -100,7 +99,7 @@ public class LittleMan : MonoBehaviour
 
         stateCurrentFrame++;
 
-        Debug.Log($"Wander:{wanderPos} Current:{pos}");
+        //Debug.Log($"Wander:{wanderPos} Current:{pos}");
 
         switch (currentState)
         {
@@ -119,12 +118,6 @@ public class LittleMan : MonoBehaviour
                 {
                     StateChange(state.Stand);
                 }
-                ///NEED TO DO:
-                ///Apply offset and rot to the sprite during StepL and StepR phases
-                ///When man comes within X Radius of WanderPos, change stage to Stand
-                ///Stand countdown, waits for 3 seconds before walking
-                ///When moving into Walking, make a random WanderPos with x and y between 2 points
-                ///Add lowerBoundX, upperBoundX, lowerBoundY, upperBoundY to represent furthest point of wandering
 
                 break;
             case state.Flee:
@@ -194,7 +187,7 @@ public class LittleMan : MonoBehaviour
                 //Wander code basically
                 break;
             case state.Dead:
-                //Blank, no moving
+                sprite = imageList[1];
                 break;
         }
 
@@ -220,6 +213,13 @@ public class LittleMan : MonoBehaviour
     void NewWanderPos()
     {
         wanderPos = new Vector3(Random.Range(minWanderX, maxWanderX), Random.Range(minWanderY, maxWanderY), 0);
+    }
+
+    internal void Die(DeathMachine machine)
+    {
+        machine.KillUp();
+        currentState = state.Dead;
+        //Play Soundfx
     }
 
     enum state
