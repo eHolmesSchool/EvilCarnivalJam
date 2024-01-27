@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class HurtBox : MonoBehaviour
 {
-
     int lifeFrames = 20 ;
     int startFrame = 0;
     int currentFrame = 0;
@@ -63,7 +62,7 @@ public class HurtBox : MonoBehaviour
         {
             collMan.Die(machine);
         }
-        Debug.Log("CollEnter");
+        //Debug.Log("CollEnter");
     }
 
     enum state

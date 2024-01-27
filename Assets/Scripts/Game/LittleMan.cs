@@ -31,10 +31,8 @@ public class LittleMan : MonoBehaviour
 
     Vector3 pos;
 
-    Vector3 movePos = Vector3.zero;
-    Vector3 moveDir = Vector3.zero;
     [SerializeField]state currentState = state.Wander;  //Start as Stand in finished game
-    float moveSpeed = 2f;
+    float moveSpeed = 3f;
 
     [SerializeField] List<Sprite> imageList = new List<Sprite>();
     Billboard billboard;
@@ -55,10 +53,9 @@ public class LittleMan : MonoBehaviour
     float walkStepSpriteOffsetHoriz = 10;
     float walkStepSpriteOffsetVert = 10;
     float desiredZRot = 0;
-    float wanderStopRadius = 10;
+    float wanderStopRadius = 150;
 
-    [SerializeField] GameObject wanderTargetTemp;
-    Vector3 wanderPos;
+    Vector3 wanderPos = new Vector3(600,200,0);
     Vector3 fleePos;
 
     int stateStartFrame = 0;
@@ -66,11 +63,10 @@ public class LittleMan : MonoBehaviour
     int standDelayFrames;
 
     int minWanderX = 100;
-    int minWanderY = 50;
-    int maxWanderX = 800;
-    int maxWanderY = 400;
+    int minWanderY = 100;
+    int maxWanderX = 1800;
+    int maxWanderY = 1000;
 
-    
 
     void Start()
     {
@@ -109,7 +105,6 @@ public class LittleMan : MonoBehaviour
                 {
                     StateChange(state.Wander);
                 }
-
                 break;
             case state.Wander:
                 transform.Translate(Vector3.Normalize(wanderPos - transform.position) * moveSpeed);
@@ -118,7 +113,6 @@ public class LittleMan : MonoBehaviour
                 {
                     StateChange(state.Stand);
                 }
-
                 break;
             case state.Flee:
                 //Get the transform of ScaryPos, and move away. Maybe this ^^ but adding? opposite order?
@@ -131,8 +125,6 @@ public class LittleMan : MonoBehaviour
                 break;
         }
     }
-
-
 
     void SpriteUpdate()
     {
@@ -200,11 +192,12 @@ public class LittleMan : MonoBehaviour
             image.transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         }//Face Right (Flipped) (notice the negative ^here)
     }
+
     private void StateChange(state newState)
     {
         stateStartFrame = stateCurrentFrame;
         currentState = newState;
-        if (newState == state.Wander)
+        if (newState == state.Stand)
         {
             NewWanderPos();
         }
@@ -215,11 +208,16 @@ public class LittleMan : MonoBehaviour
         wanderPos = new Vector3(Random.Range(minWanderX, maxWanderX), Random.Range(minWanderY, maxWanderY), 0);
     }
 
-    internal void Die(DeathMachine machine)
+    public void Die(DeathMachine machine)
     {
         machine.KillUp();
         currentState = state.Dead;
         //Play Soundfx
+    }
+
+    public void Lure(Vector3 newTargetPos)
+    {//
+        wanderPos = newTargetPos;
     }
 
     enum state
