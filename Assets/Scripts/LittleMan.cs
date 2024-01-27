@@ -26,40 +26,141 @@ public class LittleMan : MonoBehaviour
     /// MovePosition - The thing it is moving towards
     /// FearPosition - A murder scene we are running away from. Find that direction and move opposite
     /// 
+    /// Images: Stand, WalkL, WalkR, DeadGen, DeadTiger, DeadAxe, DeadWhip, DeadGen2, DeadTiger2, DeadAxe2, DeadWhip2
     /// </summary>
 
     Vector3 movePos = Vector3.zero;
     Vector3 moveDir = Vector3.zero;
     [SerializeField]state currentState = state.Wander;  //Start as Stand in finished game
-    float moveSpeed = 1;
+    float moveSpeed = 0.8f;
 
-    [SerializeField] List<Image> imageList = new List<Image>();
+    [SerializeField] List<Sprite> imageList = new List<Sprite>();
+    Billboard billboard;
+    Image image;
+    Sprite sprite;
+
+    int standardFrameNumb = 60;    //Number of frames per second approximately
+    int wanderFrameDiff;
+    int sprintFrameDiff;
+    int wanderFramesDivisor = 3;
+    int sprintFramesDivisor = 4;
+
+    int stepFrame = 0;
+    int currentFrame = 0;
+    int walkCycleNumb = 0;
+
+    float walkStepSpriteRot = 20;
+    float walkStepSpriteOffsetHoriz = 10;
+    float walkStepSpriteOffsetVert = 10;
 
     [SerializeField] GameObject wanderTargetTemp;
+    Vector3 wanderPos;
+    Vector3 fleePos;
 
     void Start()
     {
-        
+        billboard = GetComponentInChildren<Billboard>();
+        image = GetComponentInChildren<Image>();
+        sprite = image.sprite;
+
+        wanderFrameDiff = Mathf.RoundToInt(standardFrameNumb / 3);
+        sprintFrameDiff = Mathf.RoundToInt(standardFrameNumb / 4);
     }
 
     void FixedUpdate()
     {
-        switch (currentState) {
-        
+        MoveUpdate();
+        SpriteUpdate();
+    }
+
+    void MoveUpdate()
+    {
+        //TEMP
+        wanderPos = wanderTargetTemp.transform.position;
+
+        switch (currentState)
+        {
             case state.Stand:
+                //Blank, no moving
                 break;
             case state.Wander:
-                
-                transform.Translate(Vector3.Normalize(wanderTargetTemp.transform.position - transform.position) * moveSpeed);
+                transform.Translate(Vector3.Normalize(wanderPos - transform.position) * moveSpeed);
+
+                ///NEED TO DO:
+                ///Apply offset and rot to the sprite during StepL and StepR phases
+                ///When man comes within X Radius of WanderPos, change stage to Stand
+                ///Stand countdown, waits for 3 seconds before walking
+                ///When moving into Walking, make a random WanderPos with x and y between 2 points
+                ///Add lowerBoundX, upperBoundX, lowerBoundY, upperBoundY to represent furthest point of wandering
+
                 break;
             case state.Flee:
+                //Get the transform of ScaryPos, and move away. Maybe this ^^ but adding? opposite order?
                 break;
             case state.Lured:
+                //Wander code basically
                 break;
             case state.Dead:
+                //Blank, no moving
                 break;
 
         }
+    }
+
+    void SpriteUpdate()
+    {
+        currentFrame++;
+
+        switch (currentState)
+        {
+            case state.Stand:
+                sprite = imageList[0];
+                walkCycleNumb = 0;
+                break;
+            case state.Wander:
+                if (currentFrame - stepFrame >= wanderFrameDiff) 
+                {//At the end of step timer
+                    if (walkCycleNumb == 0)
+                    {//If we were at pose 1 AKA standing1
+                        sprite = imageList[1];
+                        walkCycleNumb = 1;
+                    }//Move to Walk Left
+                    else if (walkCycleNumb == 1)
+                    {//If we were on WalkL
+                        sprite = imageList[0];
+                        walkCycleNumb = 2;
+                    }//Go back to standing
+                    else if (walkCycleNumb == 2)
+                    {//If we were on standing2
+                        sprite = imageList[2];
+                        walkCycleNumb = 3;
+                    }//Go to WalkR
+                    else if (walkCycleNumb == 3)
+                    {//If we were on WalkR
+                        sprite = imageList[0];
+                        walkCycleNumb = 0;
+                    }//Go back to standing
+                    stepFrame = currentFrame;
+                }
+                break;
+            case state.Flee:
+                //Get the transform of ScaryPos, and move away. Maybe this ^^ but adding? opposite order?
+                break;
+            case state.Lured:
+                //Wander code basically
+                break;
+            case state.Dead:
+                //Blank, no moving
+                break;
+        }
+        image.sprite = sprite;
+        if (wanderPos.x < transform.position.x)
+        {//If target is to the left
+            image.transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
+        }//Face left (Normal)
+        else {
+            image.transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+        }//Face Right (Flipped) (notice the negative ^here)
     }
 
     enum state
