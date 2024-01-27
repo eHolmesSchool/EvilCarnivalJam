@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.GraphicsBuffer;
 
 public class LittleMan : MonoBehaviour
 {
@@ -29,7 +30,7 @@ public class LittleMan : MonoBehaviour
 
     Vector3 movePos = Vector3.zero;
     Vector3 moveDir = Vector3.zero;
-    [SerializeField]state currentState = state.Stand;
+    [SerializeField]state currentState = state.Wander;  //Start as Stand in finished game
     float moveSpeed = 1;
 
     [SerializeField] List<Image> imageList = new List<Image>();
@@ -49,8 +50,7 @@ public class LittleMan : MonoBehaviour
                 break;
             case state.Wander:
                 
-                Vector3.MoveTowards(transform.position,wanderTargetTemp.transform.position, 10000);
-                transform.Translate(Vector3.forward * moveSpeed);
+                transform.Translate(Vector3.Normalize(wanderTargetTemp.transform.position - transform.position) * moveSpeed);
                 break;
             case state.Flee:
                 break;
