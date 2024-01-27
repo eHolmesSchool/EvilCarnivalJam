@@ -67,8 +67,8 @@ public class LittleMan : MonoBehaviour
 
     int minWanderX = 100;
     int minWanderY = 100;
-    int maxWanderX = 600;
-    int maxWanderY = 300;
+    int maxWanderX = 900;
+    int maxWanderY = 600;
 
     
 
@@ -99,6 +99,9 @@ public class LittleMan : MonoBehaviour
         //wanderPos = wanderTargetTemp.transform.position;
 
         stateCurrentFrame++;
+
+        Debug.Log($"Wander:{wanderPos} Current:{pos}");
+
         switch (currentState)
         {
             case state.Stand:
@@ -116,8 +119,6 @@ public class LittleMan : MonoBehaviour
                 {
                     StateChange(state.Stand);
                 }
-
-                Debug.Log(Vector3.Distance(pos, wanderPos));
                 ///NEED TO DO:
                 ///Apply offset and rot to the sprite during StepL and StepR phases
                 ///When man comes within X Radius of WanderPos, change stage to Stand
