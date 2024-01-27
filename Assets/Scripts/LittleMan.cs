@@ -48,7 +48,8 @@ public class LittleMan : MonoBehaviour
             case state.Stand:
                 break;
             case state.Wander:
-                transform.LookAt(wanderTargetTemp.transform);
+                
+                Vector3.MoveTowards(transform.position,wanderTargetTemp.transform.position, 10000);
                 transform.Translate(Vector3.forward * moveSpeed);
                 break;
             case state.Flee:
