@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.GraphicsBuffer;
+
 
 public class LittleMan : MonoBehaviour
 {
@@ -29,6 +29,8 @@ public class LittleMan : MonoBehaviour
     /// Images: Stand, WalkL, WalkR, DeadGen, DeadTiger, DeadAxe, DeadWhip, DeadGen2, DeadTiger2, DeadAxe2, DeadWhip2
     /// </summary>
 
+    Vector3 pos;
+
     Vector3 movePos = Vector3.zero;
     Vector3 moveDir = Vector3.zero;
     [SerializeField]state currentState = state.Wander;  //Start as Stand in finished game
@@ -39,7 +41,7 @@ public class LittleMan : MonoBehaviour
     Image image;
     Sprite sprite;
 
-    int standardFrameNumb = 60;    //Number of frames per second approximately
+    int frameDelayStandard = 60;    //Number of frames per second approximately
     int wanderFrameDiff;
     int sprintFrameDiff;
     int wanderFramesDivisor = 3;
@@ -52,40 +54,70 @@ public class LittleMan : MonoBehaviour
     float walkStepSpriteRot = 20;
     float walkStepSpriteOffsetHoriz = 10;
     float walkStepSpriteOffsetVert = 10;
+    float desiredZRot = 0;
+    float wanderStopRadius = 10;
 
     [SerializeField] GameObject wanderTargetTemp;
     Vector3 wanderPos;
     Vector3 fleePos;
 
+    int stateStartFrame = 0;
+    int stateCurrentFrame = 0;
+    int standDelayFrames;
+
+    int minWanderX = 100;
+    int minWanderY = 100;
+    int maxWanderX = 600;
+    int maxWanderY = 300;
+
+    
+
     void Start()
     {
+        
+        standDelayFrames = 3*frameDelayStandard;
+        pos = transform.position;
         billboard = GetComponentInChildren<Billboard>();
         image = GetComponentInChildren<Image>();
         sprite = image.sprite;
 
-        wanderFrameDiff = Mathf.RoundToInt(standardFrameNumb / 3);
-        sprintFrameDiff = Mathf.RoundToInt(standardFrameNumb / 4);
+        wanderFrameDiff = Mathf.RoundToInt(frameDelayStandard / 3);
+        sprintFrameDiff = Mathf.RoundToInt(frameDelayStandard / 4);
     }
 
     void FixedUpdate()
     {
+        pos = transform.position;
         MoveUpdate();
         SpriteUpdate();
+        billboard.BillboardUpdate(desiredZRot);
     }
 
     void MoveUpdate()
     {
         //TEMP
-        wanderPos = wanderTargetTemp.transform.position;
+        //wanderPos = wanderTargetTemp.transform.position;
 
+        stateCurrentFrame++;
         switch (currentState)
         {
             case state.Stand:
                 //Blank, no moving
+                if (stateCurrentFrame - stateStartFrame >= standDelayFrames)
+                {
+                    StateChange(state.Wander);
+                }
+
                 break;
             case state.Wander:
                 transform.Translate(Vector3.Normalize(wanderPos - transform.position) * moveSpeed);
 
+                if (Vector3.Distance(pos,wanderPos) <= wanderStopRadius)
+                {
+                    StateChange(state.Stand);
+                }
+
+                Debug.Log(Vector3.Distance(pos, wanderPos));
                 ///NEED TO DO:
                 ///Apply offset and rot to the sprite during StepL and StepR phases
                 ///When man comes within X Radius of WanderPos, change stage to Stand
@@ -103,9 +135,10 @@ public class LittleMan : MonoBehaviour
             case state.Dead:
                 //Blank, no moving
                 break;
-
         }
     }
+
+
 
     void SpriteUpdate()
     {
@@ -115,6 +148,8 @@ public class LittleMan : MonoBehaviour
         {
             case state.Stand:
                 sprite = imageList[0];
+                image.transform.position = transform.position;
+                desiredZRot = 0;
                 walkCycleNumb = 0;
                 break;
             case state.Wander:
@@ -122,22 +157,30 @@ public class LittleMan : MonoBehaviour
                 {//At the end of step timer
                     if (walkCycleNumb == 0)
                     {//If we were at pose 1 AKA standing1
-                        sprite = imageList[1];
+                        sprite = imageList[0];
+                        image.transform.position = transform.position + new Vector3(walkStepSpriteOffsetHoriz, walkStepSpriteOffsetVert, 0);
+                        desiredZRot = -walkStepSpriteRot;
                         walkCycleNumb = 1;
                     }//Move to Walk Left
                     else if (walkCycleNumb == 1)
                     {//If we were on WalkL
                         sprite = imageList[0];
+                        image.transform.position = transform.position;
+                        desiredZRot = 0;
                         walkCycleNumb = 2;
                     }//Go back to standing
                     else if (walkCycleNumb == 2)
                     {//If we were on standing2
-                        sprite = imageList[2];
+                        sprite = imageList[0];
+                        image.transform.position = transform.position + new Vector3(-walkStepSpriteOffsetHoriz, walkStepSpriteOffsetVert, 0);
+                        desiredZRot = walkStepSpriteRot;
                         walkCycleNumb = 3;
                     }//Go to WalkR
                     else if (walkCycleNumb == 3)
                     {//If we were on WalkR
                         sprite = imageList[0];
+                        image.transform.position = transform.position;
+                        desiredZRot = 0;
                         walkCycleNumb = 0;
                     }//Go back to standing
                     stepFrame = currentFrame;
@@ -153,6 +196,7 @@ public class LittleMan : MonoBehaviour
                 //Blank, no moving
                 break;
         }
+
         image.sprite = sprite;
         if (wanderPos.x < transform.position.x)
         {//If target is to the left
@@ -162,6 +206,20 @@ public class LittleMan : MonoBehaviour
             image.transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         }//Face Right (Flipped) (notice the negative ^here)
     }
+    private void StateChange(state newState)
+    {
+        stateStartFrame = stateCurrentFrame;
+        currentState = newState;
+        if (newState == state.Wander)
+        {
+            NewWanderPos();
+        }
+    }
+
+    void NewWanderPos()
+    {
+        wanderPos = new Vector3(Random.Range(minWanderX, maxWanderX), Random.Range(minWanderY, maxWanderY), 0);
+    }
 
     enum state
     {
@@ -170,6 +228,5 @@ public class LittleMan : MonoBehaviour
         Flee,
         Lured,
         Dead,
-
     }
 }

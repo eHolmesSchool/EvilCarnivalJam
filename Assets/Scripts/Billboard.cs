@@ -8,12 +8,12 @@ public class Billboard : MonoBehaviour
     [SerializeField] GameObject lookAt;
     public bool isBillboarding;
 
-    // Update is called once per frame
-    void FixedUpdate()
+    public void BillboardUpdate(float desiredZRot)
     {
         if (isBillboarding)
         {
             transform.LookAt(lookAt.transform);
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, desiredZRot);
         }
     }
 }
