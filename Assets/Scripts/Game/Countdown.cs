@@ -12,6 +12,7 @@ public class Countdown : MonoBehaviour
     float startTime = 100;
     [SerializeField] GameObject display;
 
+    
 
     void FixedUpdate()  
     {
@@ -26,4 +27,6 @@ public class Countdown : MonoBehaviour
             SceneManager.LoadScene(3); //TimeUp scene
         }
     }
+
+
 }

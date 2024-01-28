@@ -8,8 +8,8 @@ public class Lure : MonoBehaviour
     [SerializeField]List<Transform> moveTransforms;
     Vector3 currentMovePos;
     int currentMovePosNumb = 0;
-    float moveSpeed = 1;
-    float movePosSwitchDist = 10;
+    [SerializeField]float moveSpeed = 1;
+    float movePosSwitchDist = 2;
 
     state currentState;
 
