@@ -156,7 +156,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 50}
+  m_AnchoredPosition: {x: -1074, y: 50}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &764198232
@@ -435,7 +435,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 13e57dff471ea83449c8cb3d00708063, type: 3}
   - {fileID: 21300000, guid: 6eb3cc699bfa7c54391f2ba2c4c242d1, type: 3}
   axeSprites:
+  - {fileID: 21300000, guid: a8ef8f8505cb2544db974f592d83da07, type: 3}
   - {fileID: 21300000, guid: b58c1351d1a4b014ca7b59d71ed4e12e, type: 3}
+  - {fileID: 21300000, guid: 6351cefd632220345b66ac664be1a64d, type: 3}
   ringMasterSprites:
   - {fileID: 21300000, guid: deb45c8b8565f5d429c36802a82564a7, type: 3}
   - {fileID: 21300000, guid: a70fb0404d40e0249acd20cca0ec63cf, type: 3}
@@ -457,10 +459,13 @@ MonoBehaviour:
   axeTexts:
   - The Axe Throwers admired their work together, the red carpet of broken targets
     spread thick under their feet. The twins' only regret was that all their targets
-    were gone. Well, all but one. I'm sure they'll win the trial.
+    were gone. Well, all but one.
   - The Axe Throwers admired their work together, the red carpet of broken targets
     spread thick under their feet. The twins' only regret was that all their targets
-    were gone. Well, all but one. I'm sure they'll win the trial.
+    were gone. Well, all but one.
+  - The Axe Throwers admired their work together, the red carpet of broken targets
+    spread thick under their feet. The twins' only regret was that all their targets
+    were gone. Well, all but one.
   ringTexts:
   - The Ringmaster's vision was realized, his dream complete! Twisting his mustache
     into its signature perfect curl, he tucks his whip into his belt and basks in
@@ -1290,8 +1295,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 500, y: 0}
-  m_SizeDelta: {x: 500, y: 800}
+  m_AnchoredPosition: {x: 463, y: 0}
+  m_SizeDelta: {x: 600, y: 800}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1992964804
 MonoBehaviour:
