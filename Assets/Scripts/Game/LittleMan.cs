@@ -68,7 +68,6 @@ public class LittleMan : MonoBehaviour
     int maxWanderY = 1000;
 
 
-
     void Start()
     {
         standDelayFrames = frameDelayStandard;

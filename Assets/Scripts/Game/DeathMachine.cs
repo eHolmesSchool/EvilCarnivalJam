@@ -14,7 +14,10 @@ public class DeathMachine : MonoBehaviour
     {
         killCount = 0;
         hurtbox = GetComponentInChildren<HurtBox>();
+    }
 
+    private void FixedUpdate()
+    {
         BeWitnessed(tag);
     }
 
@@ -27,7 +30,7 @@ public class DeathMachine : MonoBehaviour
 
         if (tag == "Tiger")
         {
-
+            TigerDisp.kills = killCount;
         }
     }
 

@@ -6,9 +6,9 @@ using UnityEngine;
 public class TigerDisp : MonoBehaviour
 {
     public static int kills;
-    public static TextMeshProUGUI scoreDisplay;
+    public TextMeshProUGUI scoreDisplay;
 
-    private void Start()
+    private void Awake()
     {
         scoreDisplay = GetComponent<TextMeshProUGUI>();
     }
