@@ -272,6 +272,7 @@ MonoBehaviour:
   moveSpeed: 0
   initialOffset: {x: 0, y: 0, z: 0}
   machine: {fileID: 74596786}
+  isPiercing: 1
 --- !u!114 &6725436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -884,7 +885,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 74596784}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1567,9 +1568,9 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 575696975}
-  - {fileID: 74596785}
   - {fileID: 319399678}
   - {fileID: 838328134}
+  - {fileID: 74596785}
   m_Father: {fileID: 577839886}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -2976,7 +2977,7 @@ Transform:
   m_GameObject: {fileID: 456053671}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -2840.9995, z: 0}
+  m_LocalPosition: {x: -70, y: -1862, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3276,10 +3277,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78b085c428d0bbd41ae533bc8344ff6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeFrames: 40
-  moveSpeed: 20
+  lifeFrames: 10
+  moveSpeed: 10
   initialOffset: {x: 0, y: 0, z: 0}
   machine: {fileID: 319399679}
+  isPiercing: 0
 --- !u!1001 &528504766
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3769,8 +3771,8 @@ Canvas:
   m_GameObject: {fileID: 577839882}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 963194227}
   m_PlaneDistance: 100
   m_PixelPerfect: 1
   m_ReceivesEvents: 1
@@ -8938,10 +8940,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78b085c428d0bbd41ae533bc8344ff6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeFrames: 20
-  moveSpeed: 5
+  lifeFrames: 10
+  moveSpeed: 1.5
   initialOffset: {x: 60, y: -140, z: 0}
   machine: {fileID: 575696979}
+  isPiercing: 1
 --- !u!54 &1443574507
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -9618,10 +9621,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78b085c428d0bbd41ae533bc8344ff6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeFrames: 40
-  moveSpeed: -20
+  lifeFrames: 10
+  moveSpeed: -10
   initialOffset: {x: 0, y: 0, z: 0}
   machine: {fileID: 838328135}
+  isPiercing: 0
 --- !u!54 &1536050600
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -10643,6 +10647,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1696320265}
+  - component: {fileID: 1696320266}
   m_Layer: 0
   m_Name: WorldCore
   m_TagString: Untagged
@@ -10668,6 +10673,35 @@ Transform:
   - {fileID: 705507995}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1696320266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1696320264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49cbe8dfa6c2950499a7ccc072e807ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exitInput:
+    m_Name: Exit Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 80adfbef-b313-461f-874a-666b7e87f2dc
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 63ab270a-ca5e-4026-99ed-c3f3ade5346a
+      m_Path: <Keyboard>/escape
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Exit Input
+      m_Flags: 0
+    m_Flags: 0
 --- !u!1001 &1702921725
 PrefabInstance:
   m_ObjectHideFlags: 0

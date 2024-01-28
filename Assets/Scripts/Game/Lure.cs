@@ -20,7 +20,7 @@ public class Lure : MonoBehaviour
         currentMovePos = moveTransforms[currentMovePosNumb].position;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (currentState == state.Active)
         {

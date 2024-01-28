@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Countdown : MonoBehaviour
 {
@@ -12,7 +13,11 @@ public class Countdown : MonoBehaviour
     float startTime = 100;
     [SerializeField] GameObject display;
 
-    
+
+    private void OnEnable()
+    {
+        
+    }
 
     void FixedUpdate()  
     {

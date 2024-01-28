@@ -31,8 +31,8 @@ public class LittleMan : MonoBehaviour
 
     Vector3 pos;
 
-    [SerializeField]state currentState = state.Wander;  //Start as Stand in finished game
-    float moveSpeed = 3f;
+    [SerializeField] public state currentState = state.Wander;  //Start as Stand in finished game
+    float moveSpeed = 1f;
 
     [SerializeField] List<Sprite> imageList = new List<Sprite>();
     Billboard billboard;
@@ -50,26 +50,29 @@ public class LittleMan : MonoBehaviour
     int walkCycleNumb = 0;
 
     float walkStepSpriteRot = 20;
-    float walkStepSpriteOffsetHoriz = 10;
-    float walkStepSpriteOffsetVert = 10;
+    float walkStepSpriteOffsetHoriz = 1;
+    float walkStepSpriteOffsetVert = 1;
     float desiredZRot = 0;
-    float wanderStopRadius = 100;
+    float wanderStopRadius = 20;
 
-    Vector3 wanderPos = new Vector3(800,200,0);
+    int FIXEDZ = 100;
+
+    Vector3 wanderPos;
     Vector3 fleePos;
 
     int stateStartFrame = 0;
     int stateCurrentFrame = 0;
     int standDelayFrames;
 
-    int minWanderX = 100;
-    int minWanderY = 100;
-    int maxWanderX = 1600;
-    int maxWanderY = 800;
+    int minWanderX = -100;
+    int minWanderY = -50;
+    int maxWanderX = 100;
+    int maxWanderY = 50;
 
 
     void Start()
     {
+        wanderPos = new Vector3(0, 10, FIXEDZ);
         standDelayFrames = frameDelayStandard;
         pos = transform.position;
         billboard = GetComponentInChildren<Billboard>();
@@ -205,7 +208,7 @@ public class LittleMan : MonoBehaviour
 
     void NewWanderPos()
     {
-        wanderPos = new Vector3(Random.Range(minWanderX, maxWanderX), Random.Range(minWanderY, maxWanderY), 0);
+        wanderPos = new Vector3(Random.Range(minWanderX, maxWanderX), Random.Range(minWanderY, maxWanderY), FIXEDZ);
     }
 
     public void Die(DeathMachine machine)
@@ -223,7 +226,7 @@ public class LittleMan : MonoBehaviour
         wanderPos = newTargetPos;
     }
 
-    enum state
+    public enum state
     {
         Stand,
         Wander,

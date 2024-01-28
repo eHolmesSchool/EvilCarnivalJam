@@ -6,15 +6,16 @@ using UnityEngine.UI;
 
 public class HurtBox : MonoBehaviour
 {
-    [SerializeField]int lifeFrames = 20;
+    [SerializeField] int lifeFrames = 20;
     int startFrame = 0;
     int currentFrame = 0;
-    [SerializeField]float moveSpeed = 5;
+    [SerializeField] float moveSpeed = 5;
     state currentState;
     Collider coll;
     Image image;
     [SerializeField] Vector3 initialOffset;
     [SerializeField] DeathMachine machine;
+    [SerializeField] bool isPiercing = true;
 
     //OPTIONAL track number of people inside box and play a different death sound
     //based on number of kills in one mov
@@ -39,7 +40,7 @@ public class HurtBox : MonoBehaviour
                 Deactivate();
             }
 
-            Move();   
+            Move();
         }
         else
         {
@@ -71,8 +72,16 @@ public class HurtBox : MonoBehaviour
         LittleMan collMan = collObj.GetComponent<LittleMan>();
         if (collMan != null)
         {
-            collMan.Die(machine);
+            if (collMan.currentState != LittleMan.state.Dead)
+            {
+                collMan.Die(machine);
+                if (!isPiercing)
+                {
+                    Deactivate();
+                }
+            }
         }
+
         //Debug.Log("CollEnter");
     }
 
