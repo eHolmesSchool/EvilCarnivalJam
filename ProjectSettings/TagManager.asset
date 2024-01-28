@@ -7,13 +7,14 @@ TagManager:
   - LittleMan
   - Tiger
   - Shark
-  - AxeMen
   - RingMaster
   - TigerDisplay
   - SharkDisplay
   - AxeMenDisplay
   - RingMasterDisplay
   - Overseer
+  - AxeMenL
+  - AxeMenR
   layers:
   - Default
   - TransparentFX

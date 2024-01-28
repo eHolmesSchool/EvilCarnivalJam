@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TimeUp.unity
     guid: dafca46b5d469da4ea5e11158e2c751c
+  - enabled: 1
+    path: Assets/Scenes/EndCutscenes.unity
+    guid: 88db28eb814d80c419bc8f2a7fa87a1e
   m_configObjects: {}

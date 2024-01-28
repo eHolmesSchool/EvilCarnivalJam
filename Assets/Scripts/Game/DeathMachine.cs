@@ -32,6 +32,22 @@ public class DeathMachine : MonoBehaviour
         {
             TigerDisp.kills = killCount;
         }
+        else  if (tag == "RingMaster")
+        {
+            RingMasterDisp.kills = killCount;
+        }
+        else if (tag == "AxeMenL")
+        {
+            AxeMenDisp.killsL = killCount;
+        }
+        else if (tag == "AxeMenR")
+        {
+            AxeMenDisp.killsR = killCount;
+        }
+        else if (tag == "Shark")
+        {
+            SharkDisp.kills = killCount;
+        }
     }
 
     public void Clicked()

@@ -10,9 +10,8 @@ public class Countdown : MonoBehaviour
     float currentTime;
     int displayTime;
     float passedTime;
-    float startTime = 100;
+    float startTime = 20;  //101
     [SerializeField] GameObject display;
-
 
     private void OnEnable()
     {
