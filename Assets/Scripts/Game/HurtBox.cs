@@ -1,22 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Scripting.APIUpdating;
 using UnityEngine.UI;
 
 public class HurtBox : MonoBehaviour
 {
-    int lifeFrames = 20 ;
+    int lifeFrames = 20;
     int startFrame = 0;
     int currentFrame = 0;
+    float moveSpeed = 10;
     state currentState;
     Collider coll;
     Image image;
+    [SerializeField] Vector3 initialOffset;
+    [SerializeField] Vector3 finalOffset;
     [SerializeField] DeathMachine machine;
 
     //OPTIONAL track number of people inside box and play a different death sound
     //based on number of kills in one mov
 
-    // Start is called before the first frame update
     void Start()
     {
         coll = GetComponent<Collider>();
@@ -24,7 +27,6 @@ public class HurtBox : MonoBehaviour
         currentState = state.Inactive;
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         currentFrame++;
@@ -37,6 +39,8 @@ public class HurtBox : MonoBehaviour
             {
                 Deactivate();
             }
+
+            //Move();   //Fix thiss Last
         }
         else
         {
@@ -47,14 +51,19 @@ public class HurtBox : MonoBehaviour
 
     public void Activate()
     {
-
         startFrame = currentFrame;
+        transform.SetLocalPositionAndRotation(initialOffset, transform.localRotation);
         currentState = state.Active;
     }
 
     public void Deactivate()
     {
         currentState = state.Inactive;
+    }
+
+    void Move()
+    {
+        transform.Translate(Vector3.Normalize(finalOffset - transform.localPosition) * moveSpeed);
     }
 
     private void OnTriggerEnter(Collider other)

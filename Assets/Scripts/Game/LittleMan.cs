@@ -210,8 +210,11 @@ public class LittleMan : MonoBehaviour
 
     public void Die(DeathMachine machine)
     {
-        machine.KillUp();
-        currentState = state.Dead;
+        if (currentState != state.Dead)
+        {
+            machine.KillUp();
+            currentState = state.Dead;
+        }        
         //Play Soundfx
     }
 
