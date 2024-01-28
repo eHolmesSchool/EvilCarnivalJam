@@ -53,7 +53,7 @@ public class LittleMan : MonoBehaviour
     float walkStepSpriteOffsetHoriz = 10;
     float walkStepSpriteOffsetVert = 10;
     float desiredZRot = 0;
-    float wanderStopRadius = 150;
+    float wanderStopRadius = 100;
 
     Vector3 wanderPos = new Vector3(600,200,0);
     Vector3 fleePos;
@@ -66,6 +66,7 @@ public class LittleMan : MonoBehaviour
     int minWanderY = 100;
     int maxWanderX = 1800;
     int maxWanderY = 1000;
+
 
 
     void Start()

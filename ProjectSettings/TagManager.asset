@@ -5,6 +5,15 @@ TagManager:
   serializedVersion: 2
   tags:
   - LittleMan
+  - Tiger
+  - Shark
+  - AxeMen
+  - RingMaster
+  - TigerDisplay
+  - SharkDisplay
+  - AxeMenDisplay
+  - RingMasterDisplay
+  - Overseer
   layers:
   - Default
   - TransparentFX

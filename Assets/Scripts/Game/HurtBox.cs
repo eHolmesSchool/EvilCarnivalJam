@@ -13,6 +13,9 @@ public class HurtBox : MonoBehaviour
     Image image;
     [SerializeField] DeathMachine machine;
 
+    //OPTIONAL track number of people inside box and play a different death sound
+    //based on number of kills in one mov
+
     // Start is called before the first frame update
     void Start()
     {

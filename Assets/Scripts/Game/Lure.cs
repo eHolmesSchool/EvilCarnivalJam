@@ -37,7 +37,7 @@ public class Lure : MonoBehaviour
 
     private void Move()
     {
-        Debug.Log(currentMovePosNumb);
+        //Debug.Log(currentMovePosNumb);
         currentMovePos = moveTransforms[currentMovePosNumb].position;
         transform.Translate(Vector3.Normalize(currentMovePos - transform.position) * moveSpeed);
 
