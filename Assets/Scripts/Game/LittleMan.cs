@@ -76,7 +76,7 @@ public class LittleMan : MonoBehaviour
     void Start()
     {
         speaker = GetComponent<AudioSource>();
-        wanderPos = new Vector3(0, 10, FIXEDZ);
+        wanderPos = new Vector3(0, 0, FIXEDZ);
         standDelayFrames = frameDelayStandard;
         pos = transform.position;
         billboard = GetComponentInChildren<Billboard>();

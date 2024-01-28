@@ -22,8 +22,6 @@ public class EndMenuManager : MonoBehaviour
         ringMasterKills = RingMasterDisp.kills;
         axeMenKills = AxeMenDisp.totalKills;
         currentEnding = SolveEnding();
-
-        Debug.Log(currentEnding.ToString());
     }
 
     public void LoadScene()

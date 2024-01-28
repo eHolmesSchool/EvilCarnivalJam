@@ -10,7 +10,8 @@ public class Countdown : MonoBehaviour
     float currentTime;
     int displayTime;
     float passedTime;
-    float startTime = 20;  //101
+    float startTimeLimit = 101;  //101
+    float startTime;
     [SerializeField] GameObject display;
 
     private void OnEnable()
@@ -18,10 +19,15 @@ public class Countdown : MonoBehaviour
         
     }
 
+    private void Start()
+    {
+        startTime = Time.time;
+    }
+
     void FixedUpdate()  
     {
-        passedTime = Time.time;
-        currentTime = startTime - passedTime;
+        passedTime = Time.time- startTime;
+        currentTime = startTimeLimit - passedTime;
         displayTime = Mathf.RoundToInt(currentTime);
 
         display.GetComponent<TextMeshProUGUI>().text = displayTime.ToString();
@@ -31,6 +37,4 @@ public class Countdown : MonoBehaviour
             SceneManager.LoadScene(3); //TimeUp scene
         }
     }
-
-
 }
