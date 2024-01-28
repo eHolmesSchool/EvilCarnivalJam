@@ -12,9 +12,12 @@ public class Lure : MonoBehaviour
     float movePosSwitchDist = 2;
 
     state currentState;
+    AudioSource speaker;
+
 
     void Start()
     {
+        speaker = GetComponent<AudioSource>();
         littleMen = new List<LittleMan>();
         currentState = state.Inactive;
         currentMovePos = moveTransforms[currentMovePosNumb].position;
@@ -80,7 +83,6 @@ public class Lure : MonoBehaviour
 
     public void Click()
     {
-
         if (currentState == state.Active)
         {
             currentState = state.Inactive;
@@ -88,6 +90,8 @@ public class Lure : MonoBehaviour
         else
         {
             currentState = state.Active;
+            speaker.Stop();
+            speaker.Play();
         }
     }
 

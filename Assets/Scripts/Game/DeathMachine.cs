@@ -9,9 +9,11 @@ public class DeathMachine : MonoBehaviour
     public int fearRadius;
     public int killCount = 0;
     public int deathMachineNumb = 0;   //USED if we implement varying death poses
+    AudioSource speaker;
 
     private void Start()
     {
+        speaker = GetComponent<AudioSource>();
         killCount = 0;
         hurtbox = GetComponentInChildren<HurtBox>();
     }
@@ -53,6 +55,8 @@ public class DeathMachine : MonoBehaviour
     public void Clicked()
     {
         hurtbox.Activate();
+        speaker.Stop();
+        speaker.Play();
     }
 
     public void KillUp()

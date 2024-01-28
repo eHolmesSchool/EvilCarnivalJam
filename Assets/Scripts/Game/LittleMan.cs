@@ -69,9 +69,13 @@ public class LittleMan : MonoBehaviour
     int maxWanderX = 100;
     int maxWanderY = 50;
 
+    AudioSource speaker;
+    [SerializeField] List<AudioClip> deathSounds;
+    int deathSoundInt;
 
     void Start()
     {
+        speaker = GetComponent<AudioSource>();
         wanderPos = new Vector3(0, 10, FIXEDZ);
         standDelayFrames = frameDelayStandard;
         pos = transform.position;
@@ -196,7 +200,7 @@ public class LittleMan : MonoBehaviour
         }//Face Right (Flipped) (notice the negative ^here)
     }
 
-    private void StateChange(state newState)
+    void StateChange(state newState)
     {
         stateStartFrame = stateCurrentFrame;
         currentState = newState;
@@ -217,7 +221,12 @@ public class LittleMan : MonoBehaviour
         {
             machine.KillUp();
             currentState = state.Dead;
-        }        
+        }
+        Debug.Log(deathSounds.Count);
+
+        deathSoundInt = Random.Range(1, deathSounds.Count-2);
+        speaker.clip = deathSounds[deathSoundInt];
+        speaker.Play();
         //Play Soundfx
     }
 
