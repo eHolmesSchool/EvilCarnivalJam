@@ -6,15 +6,14 @@ using UnityEngine.UI;
 
 public class HurtBox : MonoBehaviour
 {
-    int lifeFrames = 20;
+    [SerializeField]int lifeFrames = 20;
     int startFrame = 0;
     int currentFrame = 0;
-    float moveSpeed = 10;
+    [SerializeField]float moveSpeed = 5;
     state currentState;
     Collider coll;
     Image image;
     [SerializeField] Vector3 initialOffset;
-    [SerializeField] Vector3 finalOffset;
     [SerializeField] DeathMachine machine;
 
     //OPTIONAL track number of people inside box and play a different death sound
@@ -22,8 +21,8 @@ public class HurtBox : MonoBehaviour
 
     void Start()
     {
-        coll = GetComponent<Collider>();
-        image = GetComponent<Image>();
+        coll = GetComponentInChildren<Collider>();
+        image = GetComponentInChildren<Image>();
         currentState = state.Inactive;
     }
 
@@ -40,7 +39,7 @@ public class HurtBox : MonoBehaviour
                 Deactivate();
             }
 
-            //Move();   //Fix thiss Last
+            Move();   
         }
         else
         {
@@ -63,7 +62,7 @@ public class HurtBox : MonoBehaviour
 
     void Move()
     {
-        transform.Translate(Vector3.Normalize(finalOffset - transform.localPosition) * moveSpeed);
+        transform.Translate((Vector3.right) * moveSpeed);
     }
 
     private void OnTriggerEnter(Collider other)
